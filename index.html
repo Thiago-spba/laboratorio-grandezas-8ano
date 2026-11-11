@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laboratório das Grandezas – 8º ano</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root{
+  --bg:#EEF0FF; --card:#FFFFFF; --ink:#1E1B4B; --muted:#5A5C86; --line:#C9CCF2; --brand:#5B3FD9; --brandink:#FFFFFF;
+  --pink:#FF5C8A; --sun:#FFC933; --mint:#17B890; --ok:#0F7B5F; --okbg:#D9F6EC; --bad:#B4235A; --badbg:#FFE1EB;
+  --alert:#FFF3C4; --alertink:#3B2A00;
+  --disp:"Baloo 2","Trebuchet MS",system-ui,sans-serif; --body:"Nunito","Segoe UI",system-ui,sans-serif;
+  box-sizing:border-box; color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14122E; --card:#201D45; --ink:#F1F0FF; --muted:#B2B3DD; --line:#3B3875; --brand:#9B86FF; --brandink:#14122E;
+    --pink:#FF86A9; --sun:#FFD866; --mint:#4FE0BC; --ok:#6EE7C2; --okbg:#10382F; --bad:#FF9EBB; --badbg:#4A1830;
+    --alert:#4A3B0A; --alertink:#FFF0B8; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14122E; --card:#201D45; --ink:#F1F0FF; --muted:#B2B3DD; --line:#3B3875; --brand:#9B86FF; --brandink:#14122E;
+  --pink:#FF86A9; --sun:#FFD866; --mint:#4FE0BC; --ok:#6EE7C2; --okbg:#10382F; --bad:#FF9EBB; --badbg:#4A1830;
+  --alert:#4A3B0A; --alertink:#FFF0B8; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:600;font-size:1.05rem;line-height:1.5;overflow:hidden}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.app{height:100dvh;display:grid;grid-template-rows:auto auto 1fr auto;max-width:680px;margin:0 auto;
+  padding:calc(env(safe-area-inset-top,0px) + 8px) 12px calc(env(safe-area-inset-bottom,0px) + 10px);gap:8px}
+.bar{display:flex;gap:6px;align-items:center}
+.dots{display:flex;gap:4px;flex:1}
+.dots i{flex:1;height:8px;border-radius:9px;background:var(--line)}
+.dots i.on{background:var(--brand)}
+.notebtn{font:inherit;font-weight:800;font-size:.85rem;background:var(--sun);color:#3B2A00;border:0;border-radius:999px;padding:8px 14px;min-height:38px;cursor:pointer}
+.strip{background:var(--alert);color:var(--alertink);border:2px solid var(--sun);border-radius:12px;padding:6px 12px;font-weight:800;font-size:.92rem;text-align:center;cursor:pointer}
+main{min-height:0;display:flex}
+.card{background:var(--card);border:3px solid var(--ink);border-radius:20px;padding:18px 18px 22px;width:100%;overflow-y:auto;box-shadow:6px 6px 0 var(--brand)}
+h1{font-family:var(--disp);font-weight:800;font-size:2.3rem;line-height:1;margin:.3rem 0 .5rem}
+h2{font-family:var(--disp);font-weight:800;font-size:1.5rem;line-height:1.1;margin:0 0 .4rem}
+h3{font-family:var(--disp);font-weight:800;font-size:1.1rem;margin:.9rem 0 .3rem}
+p{margin:.4rem 0}
+.tag{display:inline-block;background:var(--brand);color:var(--brandink);font-weight:800;border-radius:999px;padding:3px 12px;font-size:.85rem}
+.muted{color:var(--muted)}
+.box{border:2px dashed var(--line);border-radius:14px;padding:10px 12px;margin:.7rem 0}
+.big{font-family:var(--disp);font-weight:800;font-size:1.9rem;color:var(--brand)}
+input[type=range]{width:100%;accent-color:var(--pink);height:34px}
+.read{display:flex;gap:10px;flex-wrap:wrap;margin:.4rem 0}
+.read div{flex:1;min-width:120px;background:var(--bg);border-radius:12px;padding:8px 12px}
+.read b{display:block;font-family:var(--disp);font-size:1.5rem}
+svg.g{display:block;width:100%;max-width:380px;height:auto;max-height:130px;margin:8px auto 0;background:var(--bg);border-radius:12px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:12px;padding:11px 16px;min-height:48px;background:var(--brand);color:var(--brandink);cursor:pointer}
+.btn.pink{background:var(--pink);color:#2A0010}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.opt{flex:1;min-width:30%;font:inherit;font-weight:800;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:12px;padding:12px 8px;min-height:50px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--brand)}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.out{display:none;margin-top:12px;border-top:2px dashed var(--line);padding-top:10px}
+.out.on{display:block}
+.calc{font-family:ui-monospace,Consolas,monospace;font-weight:700;background:var(--bg);border-radius:10px;padding:10px 12px;margin:.5rem 0;line-height:1.7;overflow-x:auto}
+.key{background:var(--okbg);color:var(--ok);border-radius:12px;padding:10px 12px;font-weight:800;margin:.6rem 0}
+.must{background:var(--alert);color:var(--alertink);border:3px solid var(--sun);border-radius:14px;padding:10px 12px;margin:.8rem 0;font-weight:800}
+.chk{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:8px}
+.chk label{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.chk input{width:24px;height:24px;margin-top:2px;accent-color:var(--mint);flex:0 0 auto}
+nav{display:flex;gap:10px}
+nav .btn{flex:1}nav .btn.ghost{flex:0 0 36%}
+.ov{position:fixed;inset:0;background:rgba(10,8,40,.8);display:none;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px calc(env(safe-area-inset-bottom,0px) + 12px);z-index:50}
+.ov.on{display:flex}
+.dlg{background:var(--card);border:3px solid var(--ink);border-radius:20px;max-width:480px;width:100%;max-height:100%;overflow-y:auto;padding:18px;box-shadow:6px 6px 0 var(--pink)}
+.dlg h2{text-align:center}
+.card .stamp{border:3px solid;border-radius:14px;padding:10px 12px;margin:10px 0}
+.dlg .stamp{border:3px solid;border-radius:14px;padding:10px 12px;margin:10px 0}
+.s1{border-color:var(--pink)!important}.s2{border-color:var(--brand)!important}
+.stamp b.t{display:block;font-family:var(--disp);font-size:1.15rem}
+h1{font-size:clamp(1.7rem,8vw,2.3rem)}h2{font-size:clamp(1.25rem,6vw,1.5rem)}
+.strip{font-size:.82rem;padding:5px 10px}
+.read b{font-size:clamp(1.15rem,5.5vw,1.5rem)}
+.read div{min-width:0;padding:6px 10px}
+.out .calc,.box .calc{font-size:.9rem}
+@media (max-width:380px){body{font-size:1rem}.card{padding:12px;border-radius:16px;box-shadow:4px 4px 0 var(--brand)}.btn{padding:9px 12px;min-height:44px}.opt{padding:10px 6px;min-height:46px;font-size:.95rem}.app{padding-left:8px;padding-right:8px}}
+@media (max-height:700px){.card{padding:12px 14px}.box{padding:8px 10px;margin:.5rem 0}p{margin:.3rem 0}}
+@media (max-height:640px){.strip{font-size:.74rem;padding:3px 8px;border-width:1px}.notebtn{min-height:34px;padding:6px 12px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar"><div class="dots" id="dots" aria-hidden="true"></div><button class="notebtn" id="notebtn" type="button">Recados</button></div>
+  <div class="strip" id="strip" role="button" tabindex="0">Tarefa: fazer, enviar e acertar. Matific: nota do bimestre.</div>
+  <main><section class="card" id="card" aria-live="polite"></section></main>
+  <nav><button class="btn ghost" id="back" type="button">Voltar</button><button class="btn" id="next" type="button">Próximo</button></nav>
+</div>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ovt">
+  <div class="dlg">
+    <h2 id="ovt">Recados importantes</h2>
+    <div class="stamp s1"><b class="t">TAREFA: FAZER, ENVIAR E ACERTAR</b>1) Faça todas as questões. 2) Clique em <b>Finalizar</b> para enviar. 3) Confira as contas para <b>acertar</b>. Só assim você tira uma boa nota.</div>
+    <div class="stamp s2"><b class="t">MATIFIC</b>O Matific equivale à <b>nota do bimestre</b>. Faça as atividades com atenção.</div>
+    <button class="btn" id="ok" type="button" style="width:100%;margin-top:6px">Entendi</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var fmt=function(n){return n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});};
+  var fmtn=function(n){return n.toLocaleString("pt-BR",{maximumFractionDigits:2});};
+
+  function graph(pts,cur,xl,yl,xm,ym){
+    var W=300,H=120,p=30,sx=function(x){return p+(x/xm)*(W-p-10)},sy=function(y){return H-p-(y/ym)*(H-p-10)};
+    var d=pts.map(function(q,i){return (i?"L":"M")+sx(q[0]).toFixed(1)+" "+sy(q[1]).toFixed(1);}).join(" ");
+    var s='<svg class="g" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Gráfico"><line x1="'+p+'" y1="'+(H-p)+'" x2="'+(W-6)+'" y2="'+(H-p)+'" stroke="currentColor" opacity=".5"/><line x1="'+p+'" y1="'+(H-p)+'" x2="'+p+'" y2="8" stroke="currentColor" opacity=".5"/>';
+    s+='<path d="'+d+'" fill="none" stroke="var(--brand)" stroke-width="3"/>';
+    pts.forEach(function(q){s+='<circle cx="'+sx(q[0]).toFixed(1)+'" cy="'+sy(q[1]).toFixed(1)+'" r="3" fill="var(--brand)"/>';});
+    s+='<circle cx="'+sx(cur[0]).toFixed(1)+'" cy="'+sy(cur[1]).toFixed(1)+'" r="6" fill="var(--pink)" stroke="var(--ink)" stroke-width="2"/>';
+    s+='<text x="'+(W/2)+'" y="'+(H-8)+'" text-anchor="middle" font-size="11" fill="currentColor">'+xl+'</text><text x="12" y="'+(H/2)+'" font-size="11" fill="currentColor" transform="rotate(-90 12 '+(H/2)+')" text-anchor="middle">'+yl+'</text></svg>';
+    return s;
+  }
+
+  var S=[];
+  // 0 capa
+  S.push(function(c){c.innerHTML='<span class="tag">8º ano</span><h1>Laboratório das Grandezas</h1><p class="muted">Descubra como uma coisa muda quando a outra muda. É o segredo da tarefa de hoje.</p><div class="box"><b>Professor Thiago, de Matemática</b><br>E.E. Moacyr Amaral</div><div class="must">Hoje você vai aprender o <b>teste do dobro</b> e treinar para acertar a tarefa. Toque em Próximo.</div>';});
+
+  // INTRODUÇÃO
+  S.push(function(c){c.innerHTML='<span class="tag">Aula 1 de 4</span><h2>O que é uma grandeza?</h2><p>Grandeza é tudo o que podemos <b>medir ou contar</b>.</p><div class="box">Exemplos: quantidade de salgados, preço, tempo, velocidade, peso, número de pessoas.</div><p>Na matemática queremos saber: <b>quando uma grandeza muda, o que acontece com a outra?</b></p><div class="must">Vamos falar: você compra mais salgados na cantina. O que muda no preço?</div>';});
+  S.push(function(c){c.innerHTML='<span class="tag">Aula 2 de 4</span><h2>Direta ou inversa?</h2><div class="box"><b>Direta:</b> as duas sobem juntas. Dobrou uma, <b>dobrou</b> a outra.<br>Ex.: salgados e preço.</div><div class="box"><b>Inversa:</b> uma sobe e a outra desce. Dobrou uma, a outra <b>caiu pela metade</b>.<br>Ex.: pessoas e fatias de pizza.</div><p>Se não for nenhuma das duas, <b>não é proporcional</b>.</p>';});
+  S.push(function(c){c.innerHTML='<span class="tag">Aula 3 de 4</span><h2>O que é o k?</h2><p>O <b>k</b> é a <b>constante de proporcionalidade</b>. Constante quer dizer: o número que <b>nunca muda</b>.</p><div class="box"><b>Direta:</b> k = y ÷ x<br>1 salgado custa R$ 4,00, então k = 4.</div><div class="box"><b>Inversa:</b> k = x · y<br>12 fatias de pizza, então k = 12.</div><div class="key">Achou o k, resolveu a questão.</div><p>Exemplo: com k = 4, 7 salgados custam 4 × 7 = R$ 28,00.</p>';});
+  S.push(function(c){c.innerHTML='<span class="tag">Aula 4 de 4</span><h2>Sentença algébrica</h2><p>É uma <b>receita com letras</b>. O <b>x</b> e o <b>y</b> são as grandezas e o <b>k</b> é a constante.</p><div class="box"><b>Direta:</b> y = k · x<br>Salgados: y = 4 · x</div><div class="box"><b>Inversa:</b> x · y = k<br>Pizza: x · y = 12</div><div class="must">Para montar: <b>1)</b> ache o k. <b>2)</b> escreva a receita.</div><p class="muted">Agora vamos testar isso no laboratório.</p>';});
+  // 1 direta
+  S.push(function(c){
+    c.innerHTML='<span class="tag">Experimento 1</span><h2>Salgados na cantina</h2><p>Cada salgado custa <b>R$ 4,00</b>. Mexa no controle:</p><input type="range" id="r1" min="1" max="10" value="3" aria-label="Quantidade de salgados"><div class="read"><div>Salgados<b id="a1">3</b></div><div>Total<b id="b1">R$ 12,00</b></div></div><button class="btn pink" id="t1" type="button" style="width:100%">Teste do dobro</button><div class="out" id="o1"></div><div id="g1"></div>';
+    function up(){var q=+$("r1").value;$("a1").textContent=q;$("b1").textContent="R$ "+fmt(4*q);var pts=[];for(var i=0;i<=10;i++)pts.push([i,4*i]);$("g1").innerHTML=graph(pts,[q,4*q],"salgados","total (R$)",10,40);}
+    $("r1").addEventListener("input",up);up();
+    $("t1").addEventListener("click",function(){var o=$("o1");o.innerHTML='<div class="calc">3 salgados: R$ 12,00<br>6 salgados (o dobro): R$ 24,00</div><p>Dobrou um, <b>dobrou o outro</b>.</p><div class="key">Grandezas DIRETAMENTE proporcionais.<br>Sentença: y = 4 · x (o 4 é a constante k)</div><p class="muted">Como achar o k: divida o total pela quantidade. 12 ÷ 3 = 4 e 24 ÷ 6 = 4. Sempre dá o mesmo valor.</p>';o.classList.add("on");});
+  });
+  // 2 inversa
+  S.push(function(c){
+    c.innerHTML='<span class="tag">Experimento 2</span><h2>Pizza dividida</h2><p>Uma pizza de <b>12 fatias</b> é dividida igualmente entre os amigos. Mexa no controle:</p><input type="range" id="r2" min="1" max="12" value="2" aria-label="Número de pessoas"><div class="read"><div>Pessoas<b id="a2">2</b></div><div>Fatias por pessoa<b id="b2">6</b></div></div><button class="btn pink" id="t2" type="button" style="width:100%">Teste do dobro</button><div class="out" id="o2"></div><div id="g2"></div>';
+    function up(){var q=+$("r2").value;$("a2").textContent=q;$("b2").textContent=fmtn(12/q);var pts=[];for(var i=1;i<=12;i++)pts.push([i,12/i]);$("g2").innerHTML=graph(pts,[q,12/q],"pessoas","fatias cada",12,12);}
+    $("r2").addEventListener("input",up);up();
+    $("t2").addEventListener("click",function(){var o=$("o2");o.innerHTML='<div class="calc">2 pessoas: 6 fatias cada<br>4 pessoas (o dobro): 3 fatias cada</div><p>Dobrou um, o outro <b>caiu pela metade</b>.</p><div class="key">Grandezas INVERSAMENTE proporcionais.<br>Sentença: x · y = 12 (o produto é sempre 12)</div><p class="muted">Confira: 2 × 6 = 12 e 4 × 3 = 12. O produto não muda.</p>';o.classList.add("on");});
+  });
+  // 3 nenhuma
+  S.push(function(c){
+    c.innerHTML='<span class="tag">Experimento 3</span><h2>Idade e altura</h2><p>A altura da Ana (exemplo) conforme ela cresce. Toque na idade:</p><div class="row" id="ages"></div><div class="read"><div>Idade<b id="a3">10 anos</b></div><div>Altura<b id="b3">1,40 m</b></div></div><button class="btn pink" id="t3" type="button" style="width:100%">Teste do dobro</button><div class="out" id="o3"></div>';
+    var H={5:"1,10 m",10:"1,40 m",15:"1,62 m",20:"1,65 m"};
+    [5,10,15,20].forEach(function(a){var b=document.createElement("button");b.type="button";b.className="opt";b.textContent=a+" anos";b.addEventListener("click",function(){$("a3").textContent=a+" anos";$("b3").textContent=H[a];});$("ages").appendChild(b);});
+    $("t3").addEventListener("click",function(){var o=$("o3");o.innerHTML='<div class="calc">10 anos: 1,40 m<br>20 anos (o dobro): 1,65 m, e não 2,80 m</div><p>Dobrou a idade, mas a altura <b>não dobrou</b> e também não caiu pela metade.</p><div class="key">NÃO é proporcional.<br>Crescer junto não basta: o dobro precisa dar o dobro ou a metade.</div>';o.classList.add("on");});
+  });
+  // 4 chave
+  S.push(function(c){c.innerHTML='<span class="tag">Chave do detetive</span><h2>3 perguntas para qualquer questão</h2><div class="box"><b>1. Dobrou um e o outro dobrou?</b><br>Direta. Sentença: y = k · x (k = y ÷ x)</div><div class="box"><b>2. Dobrou um e o outro caiu pela metade?</b><br>Inversa. Sentença: x · y = k (k = x × y)</div><div class="box"><b>3. Nenhuma das duas?</b><br>Não é proporcional.</div><div class="must">Na tarefa, <b>sempre confira com a conta</b>: divida (direta) ou multiplique (inversa) em dois pares. Se o resultado for igual, você acertou a relação.</div>';});
+
+  // casos de treino
+  var CASES=[
+   {n:1,t:"Uma lanchonete vende combos iguais. <b>2 combos custam R$ 18,00</b> e <b>5 combos custam R$ 45,00</b>. Qual é a relação entre a quantidade e o preço?",c:0,
+    steps:'<div class="calc">18 ÷ 2 = 9<br>45 ÷ 5 = 9<br>O resultado é igual: k = 9</div><div class="key">Direta. Sentença: y = 9 · x</div>'},
+   {n:2,t:"O suco de caixinha custa <b>R$ 3,50</b> cada. As grandezas quantidade de caixinhas e preço total são...? E quanto custam <b>8 caixinhas</b>?",c:0,
+    steps:'<div class="calc">y = 3,50 · x<br>y = 3,50 · 8 = 28,00</div><div class="key">Direta. 8 caixinhas custam R$ 28,00.</div>'},
+   {n:3,t:"<b>4 colegas</b> organizam o evento da escola em <b>12 horas</b>. Mantendo o mesmo ritmo, qual é a relação entre colegas e horas? E em quanto tempo <b>6 colegas</b> fariam?",c:1,
+    steps:'<div class="calc">Mais colegas, menos horas.<br>x · y = 4 × 12 = 48<br>6 · y = 48<br>y = 48 ÷ 6 = 8</div><div class="key">Inversa. 6 colegas fazem em 8 horas.</div>'},
+   {n:4,t:"Em um trajeto fixo de 120 km, a <b>40 km/h</b> o tempo é <b>3 horas</b> e a <b>60 km/h</b> o tempo é <b>2 horas</b>. Qual é a relação? Depois, veja como justificar.",c:1,
+    steps:'<div class="calc">40 × 3 = 120<br>60 × 2 = 120<br>O produto é sempre 120.</div><div class="key">Inversa.</div><div class="must">Modelo de justificativa: “São inversamente proporcionais, porque quando a velocidade aumenta o tempo diminui e o produto velocidade × tempo é sempre 120.”<br><br>Fórmula: classificação + por quê + a conta que prova.</div>'}
+  ];
+  var ans={};
+  CASES.forEach(function(cs,i){
+    S.push(function(c){
+      c.innerHTML='<span class="tag">Treino '+cs.n+' de 4</span><h2>Caso '+cs.n+'</h2><p>'+cs.t+'</p><div class="row" id="ops"></div><div class="out" id="out"></div>';
+      var L=["Direta","Inversa","Nenhuma"];
+      L.forEach(function(l,k){var b=document.createElement("button");b.type="button";b.className="opt";b.textContent=l;
+        b.addEventListener("click",function(){ if(!(i in ans))ans[i]=k; show();});$("ops").appendChild(b);});
+      function show(){var k=ans[i];document.querySelectorAll("#ops .opt").forEach(function(x,xi){x.disabled=true;if(xi===cs.c)x.classList.add("right");if(xi===k&&k!==cs.c)x.classList.add("wrong");});
+        $("out").innerHTML='<p><b>'+(k===cs.c?"Acertou!":"Quase lá.")+'</b> Veja o passo a passo:</p>'+cs.steps;$("out").classList.add("on");}
+      if(i in ans)show();
+    });
+  });
+  // final
+  S.push(function(c){
+    var items=["Fiz todas as 6 questões da tarefa","Conferi cada conta (dividi ou multipliquei em dois pares)","Na questão discursiva, escrevi classificação, por quê e a conta","Salvei o rascunho, se precisei, e cliquei em Finalizar para enviar","Fiz as atividades do Matific"];
+    var h='<span class="tag">Missão final</span><h2>Agora é com você</h2><div class="must">A tarefa só conta se você <b>fizer, enviar e acertar</b>. É assim que se tira uma boa nota.</div><ul class="chk">';
+    items.forEach(function(t){h+='<li><label><input type="checkbox"><span>'+t+'</span></label></li>';});
+    h+='</ul><div class="stamp s2"><b class="t">MATIFIC</b>Equivale à nota do bimestre. Não deixe de fazer!</div><p class="muted">Dica: na questão discursiva, use o Assistente de correção antes de finalizar.</p>';
+    c.innerHTML=h;
+  });
+
+  var idx=0,card=$("card"),dots=$("dots");
+  S.forEach(function(){dots.appendChild(document.createElement("i"));});
+  function render(){dots.querySelectorAll("i").forEach(function(d,k){d.className=k<=idx?"on":"";});S[idx](card);card.scrollTop=0;
+    $("back").disabled=(idx===0);$("next").textContent=(idx===S.length-1)?"Recomeçar":(idx===0?"Começar":"Próximo");}
+  function go(d){var n=idx+d;if(n<0)return;if(n>=S.length){idx=0;ans={};}else idx=n;render();}
+  $("next").addEventListener("click",function(){go(1);});$("back").addEventListener("click",function(){go(-1);});
+  var ov=$("ov");function openOv(){ov.classList.add("on");$("ok").focus();}function closeOv(){ov.classList.remove("on");}
+  $("ok").addEventListener("click",closeOv);$("notebtn").addEventListener("click",openOv);$("strip").addEventListener("click",openOv);
+  $("strip").addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" ")openOv();});
+  document.addEventListener("keydown",function(e){if(ov.classList.contains("on")){if(e.key==="Escape")closeOv();return;}if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);});
+  render();openOv();
+})();
+</script>
+</body>
+</html>
